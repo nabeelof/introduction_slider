@@ -50,14 +50,14 @@ class IntroductionSlider extends StatefulWidget {
     this.dotIndicator,
     this.dotIndicatorPaddingBottom = 80,
   })  : assert((initialPage <= items.length - 1) && (initialPage >= 0),
-            "initialPage can't be less than 0 or greater than items length."),
+  "initialPage can't be less than 0 or greater than items length."),
         super(key: key);
 
   @override
-  State<IntroductionSlider> createState() => _IntroductionSliderState();
+  State<IntroductionSlider> createState() => IntroductionSliderState();
 }
 
-class _IntroductionSliderState extends State<IntroductionSlider> {
+class IntroductionSliderState extends State<IntroductionSlider> {
   /// The [PageController] of the introduction slider.
   late PageController pageController;
 
@@ -130,34 +130,34 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
           widget.dotIndicator == null
               ? const SizedBox()
               : Positioned(
-                  bottom: widget.dotIndicatorPaddingBottom,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Wrap(
-                      alignment: WrapAlignment.center,
-                      spacing: 5,
-                      runSpacing: 5,
-                      children: List.generate(
-                        widget.items.length,
-                        (index) => AnimatedContainer(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: index == widget.initialPage
-                                ? widget.dotIndicator?.selectedColor
-                                : widget.dotIndicator?.unselectedColor ??
-                                    widget.dotIndicator?.selectedColor
-                                        ?.withOpacity(0.5),
-                          ),
-                          height: widget.dotIndicator?.size,
-                          width: index == widget.initialPage
-                              ? widget.dotIndicator!.size! * 2.5
-                              : widget.dotIndicator!.size,
-                          duration: const Duration(milliseconds: 350),
-                        ),
-                      ),
+            bottom: widget.dotIndicatorPaddingBottom,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 5,
+                runSpacing: 5,
+                children: List.generate(
+                  widget.items.length,
+                      (index) => AnimatedContainer(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: index == widget.initialPage
+                          ? widget.dotIndicator?.selectedColor
+                          : widget.dotIndicator?.unselectedColor ??
+                          widget.dotIndicator?.selectedColor
+                              ?.withOpacity(0.5),
                     ),
+                    height: widget.dotIndicator?.size,
+                    width: index == widget.initialPage
+                        ? widget.dotIndicator!.size! * 2.5
+                        : widget.dotIndicator!.size,
+                    duration: const Duration(milliseconds: 350),
                   ),
                 ),
+              ),
+            ),
+          ),
           Positioned(
             bottom: 35,
             child: SizedBox(
@@ -168,57 +168,57 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
                   (widget.initialPage == 0 || widget.back == null)
                       ? const SizedBox()
                       : TextButton(
-                          onPressed: () => pageController.previousPage(
-                            duration: widget.back!.animationDuration!,
-                            curve: widget.back!.curve!,
-                          ),
-                          style: widget.back!.style,
-                          child: widget.back!.child,
-                        ),
+                    onPressed: () => pageController.previousPage(
+                      duration: widget.back!.animationDuration!,
+                      curve: widget.back!.curve!,
+                    ),
+                    style: widget.back!.style,
+                    child: widget.back!.child,
+                  ),
                   lastIndex
                       ? TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                              PageRouteBuilder(
-                                transitionDuration:
-                                    widget.done.animationDuration!,
-                                transitionsBuilder: (context, animation,
-                                    secondAnimation, child) {
-                                  animation = CurvedAnimation(
-                                    parent: animation,
-                                    curve: widget.done.curve!,
-                                  );
-                                  return SlideTransition(
-                                    position: Tween<Offset>(
-                                      begin: widget.scrollDirection ==
-                                              Axis.vertical
-                                          ? const Offset(0, 1.0)
-                                          : const Offset(1.0, 0.0),
-                                      end: Offset.zero,
-                                    ).animate(animation),
-                                    child: child,
-                                  );
-                                },
-                                pageBuilder:
-                                    (context, animation, secondaryAnimation) {
-                                  return widget.done.home!;
-                                },
-                              ),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        PageRouteBuilder(
+                          transitionDuration:
+                          widget.done.animationDuration!,
+                          transitionsBuilder: (context, animation,
+                              secondAnimation, child) {
+                            animation = CurvedAnimation(
+                              parent: animation,
+                              curve: widget.done.curve!,
+                            );
+                            return SlideTransition(
+                              position: Tween<Offset>(
+                                begin: widget.scrollDirection ==
+                                    Axis.vertical
+                                    ? const Offset(0, 1.0)
+                                    : const Offset(1.0, 0.0),
+                                end: Offset.zero,
+                              ).animate(animation),
+                              child: child,
                             );
                           },
-                          style: widget.done.style,
-                          child: widget.done.child,
-                        )
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return widget.done.home!;
+                          },
+                        ),
+                      );
+                    },
+                    style: widget.done.style,
+                    child: widget.done.child,
+                  )
                       : widget.next == null
-                          ? const SizedBox()
-                          : TextButton(
-                              onPressed: () => pageController.nextPage(
-                                duration: widget.next!.animationDuration!,
-                                curve: widget.next!.curve!,
-                              ),
-                              style: widget.next!.style,
-                              child: widget.next!.child,
-                            ),
+                      ? const SizedBox()
+                      : TextButton(
+                    onPressed: () => pageController.nextPage(
+                      duration: widget.next!.animationDuration!,
+                      curve: widget.next!.curve!,
+                    ),
+                    style: widget.next!.style,
+                    child: widget.next!.child,
+                  ),
                 ],
               ),
             ),
@@ -226,5 +226,42 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
         ],
       ),
     );
+  }
+
+  void goNextPage(){
+    if(widget.initialPage == widget.items.length - 1){
+      Navigator.of(context).pushReplacement(
+        PageRouteBuilder(
+          transitionDuration:
+          widget.done.animationDuration!,
+          transitionsBuilder: (context, animation,
+              secondAnimation, child) {
+            animation = CurvedAnimation(
+              parent: animation,
+              curve: widget.done.curve!,
+            );
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: widget.scrollDirection ==
+                    Axis.vertical
+                    ? const Offset(0, 1.0)
+                    : const Offset(1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            );
+          },
+          pageBuilder:
+              (context, animation, secondaryAnimation) {
+            return widget.done.home!;
+          },
+        ),
+      );
+    } else {
+      pageController.nextPage(
+        duration: widget.next!.animationDuration!,
+        curve: widget.next!.curve!,
+      );
+    }
   }
 }
