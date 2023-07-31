@@ -130,7 +130,7 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
           widget.dotIndicator == null
               ? const SizedBox()
               : Positioned(
-                  bottom: dotIndicatorPaddingBottom,
+                  bottom: widget.dotIndicatorPaddingBottom,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Wrap(
