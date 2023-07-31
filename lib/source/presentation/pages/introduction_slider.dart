@@ -34,6 +34,9 @@ class IntroductionSlider extends StatefulWidget {
   /// The initial page index of the introduction slider.
   int initialPage;
 
+  /// DotIndicator padding bottom
+  final double dotIndicatorPaddingBottom;
+
   IntroductionSlider({
     Key? key,
     required this.items,
@@ -45,6 +48,7 @@ class IntroductionSlider extends StatefulWidget {
     required this.done,
     this.next,
     this.dotIndicator,
+    this.dotIndicatorPaddingBottom = 80,
   })  : assert((initialPage <= items.length - 1) && (initialPage >= 0),
             "initialPage can't be less than 0 or greater than items length."),
         super(key: key);
@@ -126,7 +130,7 @@ class _IntroductionSliderState extends State<IntroductionSlider> {
           widget.dotIndicator == null
               ? const SizedBox()
               : Positioned(
-                  bottom: 80,
+                  bottom: dotIndicatorPaddingBottom,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Wrap(
